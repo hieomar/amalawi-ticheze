@@ -28,11 +28,21 @@ export function ThemeProvider({
     storageKey = "voidchat-ui-theme",
     ...props
 }: ThemeProviderProps) {
-    const [theme, setTheme] = React.useState<Theme>(
-        () => (localStorage?.getItem(storageKey) as Theme) || defaultTheme
-    )
+    const [theme, setTheme] = React.useState<Theme>(defaultTheme)
+
+    // Initialize theme from localStorage after mount
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedTheme = localStorage.getItem(storageKey) as Theme
+            if (storedTheme) {
+                setTheme(storedTheme)
+            }
+        }
+    }, [storageKey])
 
     React.useEffect(() => {
+        if (typeof window === "undefined") return
+
         const root = window.document.documentElement
 
         root.classList.remove("light", "dark")
@@ -53,7 +63,9 @@ export function ThemeProvider({
     const value = {
         theme,
         setTheme: (theme: Theme) => {
-            localStorage?.setItem(storageKey, theme)
+            if (typeof window !== "undefined") {
+                localStorage.setItem(storageKey, theme)
+            }
             setTheme(theme)
         },
     }
