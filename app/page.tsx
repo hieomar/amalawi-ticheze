@@ -1,27 +1,9 @@
+import Header from "@/components/ui/header";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="border-b border-border bg-card">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">V</span>
-            </div>
-            <span className="text-foreground font-semibold text-xl">Void Chat</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="text-muted-foreground hover:text-foreground transition-colors">
-              Sign In
-            </button>
-            <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg transition-colors">
-              Get Started
-            </button>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <main className="container mx-auto px-6 py-16 lg:py-24">
@@ -139,30 +121,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border bg-card">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 bg-primary rounded flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xs">V</span>
-              </div>
-              <span className="text-muted-foreground text-sm">© 2024 Void Chat. Start your journey.</span>
-            </div>
-            <div className="flex gap-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                Support
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
