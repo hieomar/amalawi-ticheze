@@ -9,12 +9,16 @@ const geistSans = localFont({
   src: "../public/fonts/Geist[wght].woff2",
   variable: "--font-geist-sans",
   weight: "100 900",
+  display: "swap",
+  preload: false
 });
 
 const geistMono = localFont({
   src: "../public/fonts/GeistMono[wght].woff2",
   variable: "--font-geist-mono",
   weight: "100 900",
+  display: "swap",
+  preload: false
 });
 
 export const metadata: Metadata = {
