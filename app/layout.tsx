@@ -31,9 +31,10 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
   },
   icons: {
+    icon: "/voipe-bg.svg",
     apple: [
-      { url: "/next.svg", sizes: "192x192" },
-      { url: "/next.svg", sizes: "512x512" },
+      { url: "/voipe-bg.svg", sizes: "192x192" },
+      { url: "/voipe-bg.svg", sizes: "512x512" },
     ],
   },
 };
