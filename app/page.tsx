@@ -1,6 +1,7 @@
 import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -49,9 +50,9 @@ export default function Home() {
               <span className="hidden sm:inline">Start Your Journey</span>
               <span className="sm:hidden">Start Journey</span>
             </button>
-            <button className="w-full sm:w-auto border border-border hover:bg-accent text-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors">
+            <Link className="w-full sm:w-auto border border-border hover:bg-accent text-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors" href={"/demo/chat"}>
               View Demo
-            </button>
+            </Link>
           </div>
 
           {/* Feature Cards */}
@@ -71,11 +72,11 @@ export default function Home() {
                 <span className="sm:hidden">Real-time</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                <span className="hidden sm:inline">Instant messaging with WebSocket technology</span>
-                <span className="sm:hidden">Instant messaging</span>
+                <span className="hidden sm:inline">Instant messaging, voice & video chat aura with at your fingure tips </span>
+                <span className="sm:hidden">Instant aura farming</span>
               </p>
               <div className="text-xs text-muted-foreground">
-                🏆 +10 XP per message
+                🏆 +10 XP per aura shared
               </div>
             </div>
 
@@ -94,11 +95,11 @@ export default function Home() {
                 <span className="sm:hidden">PWA</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                <span className="hidden sm:inline">Install and use offline with native experience</span>
-                <span className="sm:hidden">Install & use offline</span>
+                <span className="hidden sm:inline">Install and farm with native experience</span>
+                <span className="sm:hidden">Install & use farm</span>
               </p>
               <div className="text-xs text-muted-foreground">
-                🎯 Unlock "Mobile Warrior"
+                🎯 Unlock "Mobile Aura"
               </div>
             </div>
 
@@ -137,8 +138,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </main>
+      </main >
       <Footer />
-    </div>
+    </div >
   );
 }
