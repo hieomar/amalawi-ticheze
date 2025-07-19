@@ -22,8 +22,8 @@ export default function Header() {
                             <Link className="sm:hidden" href={"/login"}>Sign</Link>
                         </button>
                         <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm sm:text-base">
-                            <span className="hidden sm:inline">Get Started</span>
-                            <span className="sm:hidden">Start</span>
+                            <Link className="hidden sm:inline" href={"/register"}>Get Started</Link>
+                            <Link className="sm:hidden" href={"/register"}>Start</Link>
                         </button>
                     </div>
                 </div>
