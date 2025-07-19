@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ThemeSwitcher } from "../theme-switcher";
+import { ModeToggle } from "../theme-switcher";
 
 export default function Header() {
     return (
@@ -16,7 +16,7 @@ export default function Header() {
                         </span>
                     </div>
                     <div className="flex items-center gap-4">
-                        <ThemeSwitcher />
+                        <ModeToggle />
                         <button className="text-muted-foreground hover:text-foreground transition-colors text-sm sm:text-base">
                             <Link className="hidden sm:inline" href={"/login"}>Sign In</Link>
                             <Link className="sm:hidden" href={"/login"}>Sign</Link>
