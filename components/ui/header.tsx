@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ModeToggle } from "../theme-switcher";
+import { VoipeIcon } from "./app-icon";
 
 export default function Header() {
     return (
@@ -7,8 +8,8 @@ export default function Header() {
             <nav className="border-b border-border bg-card">
                 <div className="container mx-auto px-6 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <span className="text-primary-foreground font-bold text-sm">V</span>
+                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transition-colors">
+                            <VoipeIcon />
                         </div>
                         <span className="text-foreground font-semibold text-xl">
                             <span className="hidden sm:inline">Void Chat</span>
