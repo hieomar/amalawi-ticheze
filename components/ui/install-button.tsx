@@ -43,7 +43,7 @@ export function InstallButton() {
             variant="outline"
             size="icon"
             onClick={handleInstallClick}
-            className="sm:size-auto sm:px-3"
+            className="sm:h-9 sm:w-auto sm:px-3"
         >
             <Download className="h-4 w-4" />
             <span className="hidden sm:inline ml-2">Install App</span>
