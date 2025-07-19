@@ -1,8 +1,16 @@
+"use client"
+
 import Header from "@/components/ui/header";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MessageSquare, Video, Mic } from "lucide-react";
+import { VoiceChat } from "@/components/ui/voice-chat";
+import { VideoChat } from "@/components/ui/video-chat";
+import { useState } from "react";
 
 export default function DemoChat() {
+    const [isVoiceOpen, setIsVoiceOpen] = useState(false)
+    const [isVideoOpen, setIsVideoOpen] = useState(false)
+
     return (
         <div className="h-screen flex flex-col overflow-hidden bg-background">
             <Header />
@@ -46,10 +54,16 @@ export default function DemoChat() {
                                     <p className="text-sm text-muted-foreground">Test the chat features</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button className="p-2 hover:bg-accent rounded-lg transition-colors">
+                                    <button
+                                        onClick={() => setIsVoiceOpen(true)}
+                                        className="p-2 hover:bg-accent rounded-lg transition-colors"
+                                    >
                                         <Mic className="w-4 h-4 text-muted-foreground" />
                                     </button>
-                                    <button className="p-2 hover:bg-accent rounded-lg transition-colors">
+                                    <button
+                                        onClick={() => setIsVideoOpen(true)}
+                                        className="p-2 hover:bg-accent rounded-lg transition-colors"
+                                    >
                                         <Video className="w-4 h-4 text-muted-foreground" />
                                     </button>
                                 </div>
@@ -88,6 +102,8 @@ export default function DemoChat() {
 
                 </div>
             </main>
+            <VoiceChat isOpen={isVoiceOpen} onClose={() => setIsVoiceOpen(false)} />
+            <VideoChat isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
         </div>
     );
 }
