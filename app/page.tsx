@@ -13,7 +13,7 @@ export default function Home() {
           <div className="mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 bg-muted px-3 py-1 rounded-full text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
               <div className="w-2 h-2 bg-chart-1 rounded-full animate-pulse"></div>
-              <span className="hidden sm:inline">Level up your conversations</span>
+              <span className="hidden sm:inline">Level up your conversations and aura</span>
               <span className="sm:hidden">Level up</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
@@ -47,8 +47,8 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 sm:mb-16 px-4 sm:px-0">
             <button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors shadow-sm">
-              <span className="hidden sm:inline">Start Your Journey</span>
-              <span className="sm:hidden">Start Journey</span>
+              <Link className="hidden sm:inline" href={"/register"}>Start Your Journey</Link>
+              <Link className="sm:hidden" href={"/register"}>Start Journey</Link>
             </button>
             <Link className="w-full sm:w-auto border border-border hover:bg-accent text-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors" href={"/demo/chat"}>
               View Demo
@@ -91,7 +91,7 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                <span className="hidden sm:inline">Progressive Web App</span>
+                <span className="hidden sm:inline">Progressive Web Aura</span>
                 <span className="sm:hidden">PWA</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
@@ -137,7 +137,7 @@ export default function Home() {
               <div className="bg-primary h-2 rounded-full w-0 transition-all duration-300"></div>
             </div>
           </div>
-        </div>
+        </div >
       </main >
       <Footer />
     </div >
