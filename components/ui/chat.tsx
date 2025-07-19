@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { MessageSquare, Video, Mic } from "lucide-react";
+import { Video, Mic } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { VideoChat } from "@/components/ui/video-chat";
 import { VoiceChat } from "@/components/ui/voice-chat";
