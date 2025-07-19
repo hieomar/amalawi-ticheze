@@ -1,10 +1,11 @@
+import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-
+      <Header />
       {/* Hero Section */}
       <main className="container mx-auto px-4 sm:px-6 py-8 sm:py-16 lg:py-24">
         <div className="text-center max-w-3xl mx-auto">
@@ -137,6 +138,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

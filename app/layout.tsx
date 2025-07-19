@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const geistSans = localFont({
@@ -54,9 +52,7 @@ export default function RootLayout({
           defaultTheme="system"
           storageKey="voidchat-ui-theme"
         >
-          <Header />
           {children}
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
