@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ThemeSwitcher } from "../theme-switcher";
 
 export default function Header() {
@@ -17,8 +18,8 @@ export default function Header() {
                     <div className="flex items-center gap-4">
                         <ThemeSwitcher />
                         <button className="text-muted-foreground hover:text-foreground transition-colors text-sm sm:text-base">
-                            <span className="hidden sm:inline">Sign In</span>
-                            <span className="sm:hidden">Sign</span>
+                            <Link className="hidden sm:inline" href={"/login"}>Sign In</Link>
+                            <Link className="sm:hidden" href={"/login"}>Sign</Link>
                         </button>
                         <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm sm:text-base">
                             <span className="hidden sm:inline">Get Started</span>
@@ -27,6 +28,6 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-        </header>
+        </header >
     )
 }
