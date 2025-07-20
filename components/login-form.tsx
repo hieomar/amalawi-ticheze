@@ -1,4 +1,8 @@
+"use client"
+
 import { GalleryVerticalEnd } from "lucide-react"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -10,9 +14,72 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const [error, setError] = useState('');
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function requestOTP(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/auth/request-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      setIsOtpSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send OTP');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function verifyOTP(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      const response = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          otp: formData.get('otp'),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      router.push('/chat');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Invalid OTP');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form onSubmit={isOtpSent ? verifyOTP : requestOTP}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a
@@ -38,12 +105,40 @@ export function LoginForm({
               <Input
                 id="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="m@example.com"
                 required
+                disabled={isOtpSent || loading}
               />
             </div>
-            <Button type="submit" className="w-full">
-              Login
+            {isOtpSent && (
+              <div className="grid gap-3">
+                <Label htmlFor="otp">Enter OTP</Label>
+                <Input
+                  id="otp"
+                  name="otp"
+                  type="text"
+                  placeholder="Enter the code sent to your email"
+                  required
+                  minLength={6}
+                  maxLength={6}
+                  disabled={loading}
+                />
+              </div>
+            )}
+            {error && (
+              <div className="text-red-500 text-sm">{error}</div>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  {isOtpSent ? 'Verifying...' : 'Sending...'}
+                </div>
+              ) : (
+                isOtpSent ? 'Verify OTP' : 'Send OTP'
+              )}
             </Button>
           </div>
           <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

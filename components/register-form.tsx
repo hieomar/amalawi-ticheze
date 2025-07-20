@@ -1,17 +1,49 @@
+"use client";
+
 import { GalleryVerticalEnd } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function RegisterForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
+    const router = useRouter();
+    const [error, setError] = useState('');
+
+    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: formData.get('username'),
+                    email: formData.get('email'),
+                }),
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Registration failed');
+            }
+
+            router.push('/login?registered=true');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Registration failed');
+        }
+    }
+
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-            <form>
+            <form onSubmit={onSubmit}>
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col items-center gap-2">
                         <a
@@ -36,6 +68,7 @@ export function RegisterForm({
                             <Label htmlFor="username">Username</Label>
                             <Input
                                 id="username"
+                                name="username"
                                 type="text"
                                 placeholder="johndoe"
                                 required
@@ -45,11 +78,15 @@ export function RegisterForm({
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"
+                                name="email"
                                 type="email"
                                 placeholder="john@example.com"
                                 required
                             />
                         </div>
+                        {error && (
+                            <div className="text-red-500 text-sm">{error}</div>
+                        )}
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>
