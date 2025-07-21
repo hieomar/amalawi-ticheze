@@ -13,15 +13,15 @@ export default function Home() {
           <div className="mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2 bg-muted px-3 py-1 rounded-full text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6">
               <div className="w-2 h-2 bg-chart-1 rounded-full animate-pulse"></div>
-              <span className="hidden sm:inline">Level up your conversations and aura</span>
-              <span className="sm:hidden">Level up</span>
+              <span className="hidden sm:inline">Connect with random strangers worldwide</span>
+              <span className="sm:hidden">Random chats</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
-              Chat in the Void
+              Meet New People in the Void
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed px-2 sm:px-0">
-              <span className="hidden sm:inline">Experience seamless real-time communication. Earn XP, unlock achievements, and level up your chat game with our gamified PWA.</span>
-              <span className="sm:hidden">Real-time chat with XP, achievements, and progression in our gamified PWA.</span>
+              <span className="hidden sm:inline">Instantly connect with random people through video calls, voice chats, or text messages. Make new friends, earn XP, and unlock achievements in our gamified chat platform.</span>
+              <span className="sm:hidden">Random video calls, voice chats, and messages with new people. Earn XP and achievements.</span>
             </p>
           </div>
 
@@ -61,22 +61,22 @@ export default function Home() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex items-center justify-center mb-3 sm:mb-4 mx-auto">
                 <Image
                   src="/globe.svg"
-                  alt="Real-time icon"
+                  alt="Random chat icon"
                   width={18}
                   height={18}
                   className="opacity-60 sm:w-5 sm:h-5"
                 />
               </div>
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                <span className="hidden sm:inline">Real-time Chat</span>
-                <span className="sm:hidden">Real-time</span>
+                <span className="hidden sm:inline">Random Video Calls</span>
+                <span className="sm:hidden">Video Chat</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                <span className="hidden sm:inline">Instant messaging, voice & video chat aura with at your fingure tips </span>
-                <span className="sm:hidden">Instant aura farming</span>
+                <span className="hidden sm:inline">Meet new people face-to-face through random video matches</span>
+                <span className="sm:hidden">Random video matches</span>
               </p>
               <div className="text-xs text-muted-foreground">
-                🏆 +10 XP per aura shared
+                🎥 +15 XP per video chat
               </div>
             </div>
 
@@ -84,22 +84,22 @@ export default function Home() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex items-center justify-center mb-3 sm:mb-4 mx-auto">
                 <Image
                   src="/window.svg"
-                  alt="PWA icon"
+                  alt="Voice chat icon"
                   width={18}
                   height={18}
                   className="opacity-60 sm:w-5 sm:h-5"
                 />
               </div>
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                <span className="hidden sm:inline">Progressive Web Aura</span>
-                <span className="sm:hidden">PWA</span>
+                <span className="hidden sm:inline">Random Voice Chat</span>
+                <span className="sm:hidden">Voice Chat</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                <span className="hidden sm:inline">Install and farm with native experience</span>
-                <span className="sm:hidden">Install & use farm</span>
+                <span className="hidden sm:inline">Have anonymous voice conversations with strangers</span>
+                <span className="sm:hidden">Anonymous calls</span>
               </p>
               <div className="text-xs text-muted-foreground">
-                🎯 Unlock "Mobile Aura"
+                🎤 +10 XP per voice chat
               </div>
             </div>
 
@@ -107,22 +107,22 @@ export default function Home() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex items-center justify-center mb-3 sm:mb-4 mx-auto">
                 <Image
                   src="/file.svg"
-                  alt="Achievement icon"
+                  alt="Text chat icon"
                   width={18}
                   height={18}
                   className="opacity-60 sm:w-5 sm:h-5"
                 />
               </div>
               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
-                <span className="hidden sm:inline">Achievement System</span>
-                <span className="sm:hidden">Achievements</span>
+                <span className="hidden sm:inline">Random Text Chat</span>
+                <span className="sm:hidden">Text Chat</span>
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                <span className="hidden sm:inline">Earn badges and level up as you chat</span>
-                <span className="sm:hidden">Earn badges & level up</span>
+                <span className="hidden sm:inline">Message random strangers anonymously and safely</span>
+                <span className="sm:hidden">Anonymous messages</span>
               </p>
               <div className="text-xs text-muted-foreground">
-                ⭐ 25+ achievements to unlock
+                💬 +5 XP per conversation
               </div>
             </div>
           </div>
