@@ -50,7 +50,7 @@ export default function Home() {
               <Link className="hidden sm:inline" href={"/register"}>Start Your Journey</Link>
               <Link className="sm:hidden" href={"/register"}>Start Journey</Link>
             </button>
-            <Link className="w-full sm:w-auto border border-border hover:bg-accent text-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors" href={"/demo"}>
+            <Link className="w-full sm:w-auto border border-border hover:bg-accent text-foreground px-6 sm:px-8 py-3 rounded-lg font-medium transition-colors" href={"/options"}>
               View Demo
             </Link>
           </div>
