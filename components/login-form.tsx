@@ -1,34 +1,40 @@
-"use client"
+"use client";
 
-import { GalleryVerticalEnd } from "lucide-react"
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { GalleryVerticalEnd } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  if (!backendUrl) {
+    throw new Error("NEXT_PUBLIC_BACKEND_URL is not defined");
+  }
 
   async function requestOTP(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/auth/request-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch(`${backendUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
@@ -39,8 +45,11 @@ export function LoginForm({
       }
 
       setIsOtpSent(true);
+
+      // redirect to /otp-verification
+      router.push("/otp-verification");
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send OTP');
+      setError(err instanceof Error ? err.message : "Failed to send OTP");
     } finally {
       setLoading(false);
     }
@@ -49,17 +58,17 @@ export function LoginForm({
   async function verifyOTP(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     const formData = new FormData(event.currentTarget);
 
     try {
-      const response = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
-          otp: formData.get('otp'),
+          otp: formData.get("otp"),
         }),
       });
 
@@ -69,9 +78,9 @@ export function LoginForm({
         throw new Error(data.error);
       }
 
-      router.push('/chat');
+      router.push("/chat");
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Invalid OTP');
+      setError(err instanceof Error ? err.message : "Invalid OTP");
     } finally {
       setLoading(false);
     }
@@ -127,17 +136,17 @@ export function LoginForm({
                 />
               </div>
             )}
-            {error && (
-              <div className="text-red-500 text-sm">{error}</div>
-            )}
+            {error && <div className="text-red-500 text-sm">{error}</div>}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? (
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                  {isOtpSent ? 'Verifying...' : 'Sending...'}
+                  {isOtpSent ? "Verifying..." : "Sending..."}
                 </div>
+              ) : isOtpSent ? (
+                "Verify OTP"
               ) : (
-                isOtpSent ? 'Verify OTP' : 'Send OTP'
+                "Send OTP"
               )}
             </Button>
           </div>
@@ -167,11 +176,11 @@ export function LoginForm({
             </Button>
           </div>
         </div>
-      </form >
+      </form>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </div>
-    </div >
-  )
+    </div>
+  );
 }
