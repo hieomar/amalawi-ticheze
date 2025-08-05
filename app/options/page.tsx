@@ -8,11 +8,13 @@ export default function DemoSelection() {
       <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8">Choose Demo Type</h1>
-          
+          <h1 className="text-3xl font-bold text-center mb-8">
+            Choose Demo Type
+          </h1>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link 
-              href="/demo/messaging"
+            <Link
+              href="/messaging"
               className="flex flex-col items-center p-6 bg-card hover:bg-accent border border-border rounded-lg transition-colors"
             >
               <MessageSquare className="w-12 h-12 mb-4 text-primary" />
@@ -22,7 +24,7 @@ export default function DemoSelection() {
               </p>
             </Link>
 
-            <Link 
+            <Link
               href="/demo/video"
               className="flex flex-col items-center p-6 bg-card hover:bg-accent border border-border rounded-lg transition-colors"
             >
@@ -33,7 +35,7 @@ export default function DemoSelection() {
               </p>
             </Link>
 
-            <Link 
+            <Link
               href="/demo/voice"
               className="flex flex-col items-center p-6 bg-card hover:bg-accent border border-border rounded-lg transition-colors"
             >
@@ -48,4 +50,4 @@ export default function DemoSelection() {
       </main>
     </div>
   );
-} 
+}
