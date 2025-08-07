@@ -25,7 +25,7 @@ export default function DemoSelection() {
             </Link>
 
             <Link
-              href="/demo/video"
+              href="/video"
               className="flex flex-col items-center p-6 bg-card hover:bg-accent border border-border rounded-lg transition-colors"
             >
               <Video className="w-12 h-12 mb-4 text-primary" />
@@ -36,7 +36,7 @@ export default function DemoSelection() {
             </Link>
 
             <Link
-              href="/demo/voice"
+              href="/voice"
               className="flex flex-col items-center p-6 bg-card hover:bg-accent border border-border rounded-lg transition-colors"
             >
               <Mic className="w-12 h-12 mb-4 text-primary" />
