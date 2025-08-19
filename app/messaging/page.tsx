@@ -91,7 +91,7 @@ const demoChatData: ChatWithMessages[] = [
   },
 ];
 
-export default function MessagingDemo() {
+export default function MessagingPage() {
   const [activeChat, setActiveChat] = useState<ChatWithMessages | null>(null);
 
   return (
