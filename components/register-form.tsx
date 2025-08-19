@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { registerUser, verifyOTP } from "@/lib/auth";
 
 export function RegisterForm({
   className,
@@ -21,26 +22,11 @@ export function RegisterForm({
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const username = formData.get("username") as string;
     const emailValue = formData.get("email") as string;
 
     try {
-      const response = await fetch(`${backendUrl}/api/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: formData.get("username"),
-          email: emailValue,
-        }),
-      });
-
-      if (!response.ok) {
-        setIsOtpSent(false);
-        const data = await response.json();
-        throw new Error(data.message || "Registration failed");
-      }
-
+      await registerUser(username, emailValue);
       setEmail(emailValue);
       setIsOtpSent(true);
       setError("");
@@ -52,24 +38,9 @@ export function RegisterForm({
   async function onVerifyOtp(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     try {
-      const response = await fetch(`${backendUrl}/api/auth/verify-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          otp: formData.get("otp"),
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || "OTP verification failed");
-      }
-
-      // Redirect to login page after successful verification
+      await verifyOTP(email, formData.get("otp") as string);
       router.push("/options");
     } catch (err) {
       setError(err instanceof Error ? err.message : "OTP verification failed");

@@ -4,6 +4,23 @@ if (!backendUrl) {
   throw new Error("NEXT_PUBLIC_BACKEND_URL is not defined");
 }
 
+export async function registerUser(username: string, email: string) {
+  const response = await fetch(`${backendUrl}/api/auth/register`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, email }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Registration failed");
+  }
+
+  return data;
+}
+
 export async function requestOTP(email: string) {
   const response = await fetch(`${backendUrl}/api/auth/login`, {
     method: "POST",
