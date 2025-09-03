@@ -1,9 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Search, Plus, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChatWithMessages } from "@/types/chat";
+import { useSocket } from "@/hooks/useSocket";
+import { User } from "@/types/auth";
+import { useRouter } from "next/navigation";
 
 interface ChatListProps {
   chats: ChatWithMessages[];
@@ -12,17 +15,40 @@ interface ChatListProps {
 }
 
 export function ChatList({ chats, activeChat, onChatSelect }: ChatListProps) {
+  const router = useRouter();
   const [isSearchingMatch, setIsSearchingMatch] = useState(false);
+  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+
+  if (!user._id) {
+    router.push("/login");
+    return null;
+  }
+  const { findMatch, socket } = useSocket(user._id);
 
   const handleStartNewChat = () => {
     setIsSearchingMatch(true);
-    // In a real application, this would make an API call to find matches
-    // For demo purposes, we'll use a timeout to simulate the API call
-    setTimeout(() => {
-      setIsSearchingMatch(false);
-      // Here you would typically handle the matched user
-    }, 5000); // 5 seconds delay to simulate search
+    findMatch();
   };
+
+  // Listen for the match
+  useEffect(() => {
+    socket.on("match-found", ({ userId: matchedUserId }) => {
+      setIsSearchingMatch(false);
+      console.log("Matched with:", matchedUserId);
+      // Here you would create a new chat room with matchedUserId
+      // and open the Chat component
+    });
+
+    socket.on("no-match", () => {
+      setIsSearchingMatch(false);
+      alert("No users online at the moment. Try again later.");
+    });
+
+    return () => {
+      socket.off("match-found");
+      socket.off("no-match");
+    };
+  }, [socket]);
 
   return (
     <div className="h-full flex flex-col bg-card border border-border rounded-lg overflow-hidden">

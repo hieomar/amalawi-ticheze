@@ -29,7 +29,11 @@ export function useSocket(userId: string) {
     socket.emit("message", message);
   };
 
-  return { socket, joinRoom, sendMessage };
+  const findMatch = () => {
+    socket.emit("find-match", userId);
+  };
+
+  return { socket, joinRoom, sendMessage, findMatch };
 }
 // "use client";
 

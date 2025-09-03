@@ -2,6 +2,9 @@ import { Message } from "@/types/chat";
 import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {
+  "find-match": (userId: string) => void;
+  "match-found": (userId: string) => void;
+  "no-match": () => void;
   "user-online": (userId: string) => void;
   "user-offline": (userId: string) => void;
   "user-connected": (socketId: string) => void;
@@ -12,6 +15,7 @@ interface ServerToClientEvents {
 }
 
 interface ClientToServerEvents {
+  "find-match": (userId: string) => void;
   register: (userId: string) => void;
   join: (roomId: string) => void;
   message: (msg: Message) => void; // sending full Message object

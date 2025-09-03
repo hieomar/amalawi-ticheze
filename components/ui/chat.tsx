@@ -8,12 +8,15 @@ import { VideoChat } from "@/components/ui/video-chat";
 import { VoiceChat } from "@/components/ui/voice-chat";
 import { ChatWithMessages, Message } from "@/types/chat";
 import { useSocket } from "@/hooks/useSocket";
+import { User } from "@/types/auth";
+import { useRouter } from "next/navigation";
 
 interface ChatProps {
   activeChat: ChatWithMessages | null;
 }
 
 export function Chat({ activeChat }: ChatProps) {
+  const router = useRouter();
   const [isVoiceOpen, setIsVoiceOpen] = React.useState(false);
   const [isVideoOpen, setIsVideoOpen] = React.useState(false);
   const [messageInput, setMessageInput] = React.useState("");
@@ -21,8 +24,14 @@ export function Chat({ activeChat }: ChatProps) {
     activeChat?.messages ?? [],
   );
 
-  const userId = "current-user"; // TODO: replace with real auth user id
-  const userName = "You"; // TODO: replace with real display name
+  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+  if (!user || !user._id || !user.username) {
+    console.error("User not found in local storage");
+    router.push("/login");
+    return null;
+  }
+  const userId = user._id;
+  const userName = user.username;
   const { socket, joinRoom, sendMessage } = useSocket(userId);
 
   useEffect(() => {

@@ -41,7 +41,7 @@ export async function requestOTP(email: string) {
 export async function verifyOTP(email: string, otp: string) {
   const response = await fetch(`${backendUrl}/api/auth/verify-otp`, {
     method: "POST",
-    credentials: "include",
+    // credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, otp }),
   });

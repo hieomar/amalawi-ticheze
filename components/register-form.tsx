@@ -40,7 +40,10 @@ export function RegisterForm({
     const formData = new FormData(event.currentTarget);
 
     try {
-      await verifyOTP(email, formData.get("otp") as string);
+      const result = await verifyOTP(email, formData.get("otp") as string);
+
+      // Save user in localStorage
+      localStorage.setItem("user", JSON.stringify(result.user));
       router.push("/options");
     } catch (err) {
       setError(err instanceof Error ? err.message : "OTP verification failed");
