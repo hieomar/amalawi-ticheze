@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { requestOTP, verifyOTP } from "@/lib/auth";
+import { useAuthStore } from "@/states/auth.state";
 
 export function LoginForm({
   className,
@@ -46,8 +47,8 @@ export function LoginForm({
     try {
       const result = await verifyOTP(email, formData.get("otp") as string);
 
-      // Save user in localStorage
-      localStorage.setItem("user", JSON.stringify(result.user));
+      // Save user in Zustand store (persisted)
+      useAuthStore.getState().setUser(result.user);
       router.push("/options");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Invalid OTP");
