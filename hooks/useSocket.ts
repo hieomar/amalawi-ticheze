@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { socket } from "@/lib/socket";
 import { Message } from "@/types/chat";
+import { socket } from "@/lib/socket";
 
 export function useSocket(userId: string) {
   useEffect(() => {
