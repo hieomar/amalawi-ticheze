@@ -7,6 +7,7 @@ import { ChatWithMessages } from "@/types/chat";
 import { useSocket } from "@/hooks/useSocket";
 import { User } from "@/types/auth";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/states/auth.state";
 
 interface ChatListProps {
   chats: ChatWithMessages[];
@@ -17,9 +18,9 @@ interface ChatListProps {
 export function ChatList({ chats, activeChat, onChatSelect }: ChatListProps) {
   const router = useRouter();
   const [isSearchingMatch, setIsSearchingMatch] = useState(false);
-  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+  const user = useAuthStore((state) => state.user);
 
-  if (!user._id) {
+  if (!user?._id) {
     router.push("/login");
     return null;
   }
@@ -32,12 +33,15 @@ export function ChatList({ chats, activeChat, onChatSelect }: ChatListProps) {
 
   // Listen for the match
   useEffect(() => {
-    socket.on("match-found", ({ userId: matchedUserId }) => {
-      setIsSearchingMatch(false);
-      console.log("Matched with:", matchedUserId);
-      // Here you would create a new chat room with matchedUserId
-      // and open the Chat component
-    });
+    // socket.on("match-found", ({ userId: matchedUserId }) => {
+    //   setIsSearchingMatch(false);
+    //   console.log("Matched with:", matchedUserId);
+    //   // Here you would create a new chat room with matchedUserId
+    //   // and open the Chat component
+    // });
+    //
+    findMatch();
+    setIsSearchingMatch(false);
 
     socket.on("no-match", () => {
       setIsSearchingMatch(false);

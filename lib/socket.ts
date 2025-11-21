@@ -1,4 +1,4 @@
-import { Message } from "@/types/chat";
+import { ChatWithMessages, Message } from "@/types/chat";
 import { io, Socket } from "socket.io-client";
 
 interface ServerToClientEvents {
@@ -14,6 +14,7 @@ interface ServerToClientEvents {
   answer: (answer: RTCSessionDescriptionInit) => void;
   "ice-candidate": (candidate: RTCIceCandidateInit) => void;
   "number-of-online-users": (count: number) => void;
+  "chat-list": (chatList: ChatWithMessages[]) => void;
 }
 
 interface ClientToServerEvents {
@@ -30,9 +31,10 @@ interface ClientToServerEvents {
   }) => void;
   "number-of-online-users": () => void;
   "user-disconnected": (socketId: string) => void;
+  "get-chat-list": (userId: string) => void;
 }
 
-const URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3000";
+const URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";
 
 // Singleton, strongly-typed socket
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(

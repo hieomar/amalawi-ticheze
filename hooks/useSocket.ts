@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Message } from "@/types/chat";
+import { ChatWithMessages, Message } from "@/types/chat";
 import { socket } from "@/lib/socket";
 
 export function useSocket(userId: string) {
@@ -11,15 +11,18 @@ export function useSocket(userId: string) {
       socket.connect();
     }
 
-    // Identify the user to the server
     socket.emit("register", userId);
 
-    // NOTE: don't disconnect globally here; other components may use the same socket
+    // Cleanup must return void or a destructor function
     return () => {
-      // Optional: emit a presence hint or leave-room here if you track it per page
-      // socket.emit("leave", userId);
+      // Do NOT disconnect globally — that breaks shared socket usage
+      // Only cleanup local listeners if you want
     };
   }, [userId]);
+
+  const cleanup = (event: string) => {
+    socket.off(event);
+  };
 
   const joinRoom = (roomId: string) => {
     socket.emit("join", roomId);
@@ -33,7 +36,25 @@ export function useSocket(userId: string) {
     socket.emit("find-match", userId);
   };
 
-  return { socket, joinRoom, sendMessage, findMatch };
+  const getChatList = () => {
+    socket.emit("get-chat-list", userId);
+  };
+
+  const chatListResponse = (
+    callback: (chatList: ChatWithMessages[]) => void,
+  ) => {
+    socket.on("chat-list", callback);
+  };
+
+  return {
+    socket,
+    cleanup,
+    joinRoom,
+    sendMessage,
+    findMatch,
+    getChatList,
+    chatListResponse,
+  };
 }
 // "use client";
 
