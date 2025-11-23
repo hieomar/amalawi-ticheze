@@ -20,6 +20,14 @@ export function useSocket(userId: string) {
     };
   }, [userId]);
 
+  const numberOfUsers = () => {
+    socket.emit("number-of-online-users");
+  };
+
+  const getNumberOfOnlineUsers = (callback: (count: number) => void) => {
+    socket.on("number-of-online-users", callback);
+  };
+
   const cleanup = (event: string) => {
     socket.off(event);
   };
@@ -54,6 +62,8 @@ export function useSocket(userId: string) {
     findMatch,
     getChatList,
     chatListResponse,
+    numberOfUsers,
+    getNumberOfOnlineUsers,
   };
 }
 // "use client";

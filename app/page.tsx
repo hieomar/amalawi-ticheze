@@ -1,33 +1,21 @@
 "use client";
 import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
-import { socket } from "@/lib/socket";
+// import { socket } from "@/lib/socket";
+import { useSocket } from "@/hooks/useSocket";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Home() {
   const [onlineUsers, setOnlineUsers] = useState(0);
-
+  const { getNumberOfOnlineUsers, numberOfUsers } = useSocket("");
   useEffect(() => {
-    // Request the server to send the current number
-    socket.emit("number-of-online-users");
-
-    // Listen for updates from the server
-    socket.on("number-of-online-users", (numUsers) => {
-      setOnlineUsers(numUsers);
+    numberOfUsers();
+    getNumberOfOnlineUsers((count) => {
+      setOnlineUsers(count);
+      console.log("Online users:", count);
     });
-
-    // Optional: re-request when reconnecting
-    socket.on("connection", () => {
-      socket.emit("number-of-online-users");
-    });
-
-    // Cleanup on unmount
-    return () => {
-      socket.off("number-of-online-users");
-      socket.off("connection");
-    };
   }, []);
   return (
     <div className="min-h-screen bg-background text-foreground">
