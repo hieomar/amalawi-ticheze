@@ -4,6 +4,7 @@
 import { useEffect } from "react";
 import { ChatWithMessages, Message } from "@/types/chat";
 import { socket } from "@/lib/socket";
+import { useMatchStore } from "@/states/match.store";
 
 export function useSocket(userId: string) {
   useEffect(() => {
@@ -28,6 +29,10 @@ export function useSocket(userId: string) {
     socket.on("number-of-online-users", callback);
   };
 
+  const register = (userId: string) => {
+    socket.emit("register", userId);
+  };
+
   const cleanup = (event: string) => {
     socket.off(event);
   };
@@ -42,7 +47,55 @@ export function useSocket(userId: string) {
 
   const findMatch = () => {
     socket.emit("find-match", userId);
+
+    socket.off("match-found");
+    socket.off("no-match");
+
+    // When a match is found
+    socket.on("match-found", ({ roomId, users }) => {
+      console.log("Match found:", roomId, users);
+
+      // 1️⃣ Store match globally (Zustand)
+      useMatchStore.getState().setMatch(roomId, users);
+
+      // 2️⃣ Automatically join the room
+      socket.emit("join", roomId);
+
+      // 3️⃣ Tell the UI to open the chat screen
+      useMatchStore.getState().setActiveChatRoom(roomId);
+    });
+
+    // When no match found
+    socket.on("no-match", (msg: { message: string }) => {
+      useMatchStore.getState().setNoMatch(msg.message);
+    });
   };
+  // const findMatch = () => {
+  //   socket.emit("find-match", userId);
+
+  //   socket.off("match-found");
+  //   socket.off("no-match");
+
+  //   // Match found
+  //   socket.on("match-found", ({ roomId, users }) => {
+  //     alert(`Match found! Room ID: ${roomId}`);
+  //     useMatchStore.getState().setMatch(roomId, users);
+  //   });
+
+  //   // No match
+  //   socket.on("no-match", (msg: { message: string }) => {
+  //     alert(`No match found: ${msg.message}`);
+  //     useMatchStore.getState().setNoMatch(msg.message);
+  //   });
+  // };
+
+  // const noMatch = (callback: (message: string) => void) => {
+  //   socket.on("no-match", callback);
+  // };
+
+  // const matchFound = (callback: (roomId: string, users: string[]) => void) => {
+  //   socket.on("match-found", callback);
+  // };
 
   const getChatList = () => {
     socket.emit("get-chat-list", userId);
@@ -56,10 +109,13 @@ export function useSocket(userId: string) {
 
   return {
     socket,
+    register,
     cleanup,
     joinRoom,
     sendMessage,
     findMatch,
+    // noMatch,
+    // matchFound,
     getChatList,
     chatListResponse,
     numberOfUsers,

@@ -5,9 +5,9 @@ import { Search, Plus, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChatWithMessages } from "@/types/chat";
 import { useSocket } from "@/hooks/useSocket";
-import { User } from "@/types/auth";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/states/auth.state";
+import { useMatchStore } from "@/states/match.store";
 
 interface ChatListProps {
   chats: ChatWithMessages[];
@@ -18,42 +18,38 @@ interface ChatListProps {
 export function ChatList({ chats, activeChat, onChatSelect }: ChatListProps) {
   const router = useRouter();
   const [isSearchingMatch, setIsSearchingMatch] = useState(false);
+  const [noMatchFound, setNoMatchFound] = useState("");
   const user = useAuthStore((state) => state.user);
 
   if (!user?._id) {
     router.push("/login");
     return null;
   }
-  const { findMatch, socket } = useSocket(user._id);
+  const { findMatch } = useSocket(user._id);
 
   const handleStartNewChat = () => {
     setIsSearchingMatch(true);
     findMatch();
+    setIsSearchingMatch(false);
   };
 
-  // Listen for the match
+  const match = useMatchStore((state) => state.match);
+  const activeChatRoom = useMatchStore((state) => state.activeChatRoom);
+
+  // When the store says a match started → call onChatSelect()
   useEffect(() => {
-    // socket.on("match-found", ({ userId: matchedUserId }) => {
-    //   setIsSearchingMatch(false);
-    //   console.log("Matched with:", matchedUserId);
-    //   // Here you would create a new chat room with matchedUserId
-    //   // and open the Chat component
-    // });
-    //
-    findMatch();
-    setIsSearchingMatch(false);
-
-    socket.on("no-match", () => {
-      setIsSearchingMatch(false);
-      alert("No users online at the moment. Try again later.");
-    });
-
-    return () => {
-      socket.off("match-found");
-      socket.off("no-match");
-    };
-  }, [socket]);
-
+    if (match && activeChatRoom) {
+      onChatSelect({
+        id: activeChatRoom,
+        name: "New Partner",
+        avatarUrl: "",
+        messages: [],
+        timestamp: "",
+        lastMessage: "",
+        unreadCount: 0,
+      });
+    }
+  }, [match, activeChatRoom]);
   return (
     <div className="h-full flex flex-col bg-card border border-border rounded-lg overflow-hidden">
       {/* New Chat Button */}

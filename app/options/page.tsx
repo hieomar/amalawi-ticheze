@@ -1,8 +1,32 @@
+"use client";
 import Header from "@/components/ui/header";
 import Link from "next/link";
 import { MessageSquare, Video, Mic } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useSocket } from "@/hooks/useSocket";
+import { useAuthStore } from "@/states/auth.state";
+import { useRouter } from "next/navigation";
 
-export default function DemoSelection() {
+export default function OptionsPage() {
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
+
+  // Always call this hook — even if user is null
+  const { register } = useSocket(user?._id || "");
+
+  // Redirect effect (safe)
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    register(user._id);
+    // return () => cleanup("chat-list");
+  }, [user]);
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -47,4 +71,7 @@ export default function DemoSelection() {
       </main>
     </div>
   );
+}
+function cleanup(arg0: string): void | { [UNDEFINED_VOID_ONLY]: never } {
+  throw new Error("Function not implemented.");
 }

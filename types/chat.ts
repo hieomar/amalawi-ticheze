@@ -7,14 +7,6 @@ export type Chat = {
   unreadCount?: number;
 };
 
-// export type Message = {
-//   id: string;
-//   content: string;
-//   senderId: string;
-//   timestamp: string;
-//   senderName: string;
-// };
-
 export type Message = {
   id: string;
   content: string;

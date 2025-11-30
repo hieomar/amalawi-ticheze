@@ -4,8 +4,14 @@ import { io, Socket } from "socket.io-client";
 interface ServerToClientEvents {
   connection: () => void;
   "find-match": (userId: string) => void;
-  "match-found": (userId: string) => void;
-  "no-match": () => void;
+  "match-found": ({
+    roomId,
+    users,
+  }: {
+    roomId: string;
+    users: string[];
+  }) => void;
+  "no-match": ({ message }: { message: string }) => void;
   "user-online": (userId: string) => void;
   "user-offline": (userId: string) => void;
   "user-connected": (socketId: string) => void;
