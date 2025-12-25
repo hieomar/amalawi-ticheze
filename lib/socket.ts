@@ -21,6 +21,18 @@ interface ServerToClientEvents {
   "ice-candidate": (candidate: RTCIceCandidateInit) => void;
   "number-of-online-users": (count: number) => void;
   "chat-list": (chatList: ChatWithMessages[]) => void;
+  "voice-answer": (data: {
+    answer: RTCSessionDescriptionInit;
+    roomId: string;
+  }) => void;
+  "voice-offer": (data: {
+    offer: RTCSessionDescriptionInit;
+    roomId: string;
+  }) => void;
+  "voice-ice-candidate": (data: {
+    candidate: RTCIceCandidateInit;
+    roomId: string;
+  }) => void;
 }
 
 interface ClientToServerEvents {
@@ -38,6 +50,18 @@ interface ClientToServerEvents {
   "number-of-online-users": () => number;
   "user-disconnected": (socketId: string) => void;
   "get-chat-list": (userId: string) => void;
+  "voice-ice-candidate": (data: {
+    candidate: RTCIceCandidateInit;
+    roomId: string;
+  }) => void;
+  "voice-offer": (data: {
+    offer: RTCSessionDescriptionInit;
+    roomId: string;
+  }) => void;
+  "voice-answer": (data: {
+    answer: RTCSessionDescriptionInit;
+    roomId: string;
+  }) => void;
 }
 
 const URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000";

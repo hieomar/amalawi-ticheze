@@ -37,6 +37,12 @@ export function useSocket(userId: string) {
     socket.off(event);
   };
 
+  // const cleanupVoiceListeners = () => {
+  //   socket.off("voice-answer");
+  //   socket.off("voice-offer");
+  //   socket.off("voice-ice-candidate");
+  // };
+
   const joinRoom = (roomId: string) => {
     socket.emit("join", roomId);
   };
@@ -70,32 +76,6 @@ export function useSocket(userId: string) {
       useMatchStore.getState().setNoMatch(msg.message);
     });
   };
-  // const findMatch = () => {
-  //   socket.emit("find-match", userId);
-
-  //   socket.off("match-found");
-  //   socket.off("no-match");
-
-  //   // Match found
-  //   socket.on("match-found", ({ roomId, users }) => {
-  //     alert(`Match found! Room ID: ${roomId}`);
-  //     useMatchStore.getState().setMatch(roomId, users);
-  //   });
-
-  //   // No match
-  //   socket.on("no-match", (msg: { message: string }) => {
-  //     alert(`No match found: ${msg.message}`);
-  //     useMatchStore.getState().setNoMatch(msg.message);
-  //   });
-  // };
-
-  // const noMatch = (callback: (message: string) => void) => {
-  //   socket.on("no-match", callback);
-  // };
-
-  // const matchFound = (callback: (roomId: string, users: string[]) => void) => {
-  //   socket.on("match-found", callback);
-  // };
 
   const getChatList = () => {
     socket.emit("get-chat-list", userId);
@@ -114,8 +94,6 @@ export function useSocket(userId: string) {
     joinRoom,
     sendMessage,
     findMatch,
-    // noMatch,
-    // matchFound,
     getChatList,
     chatListResponse,
     numberOfUsers,
